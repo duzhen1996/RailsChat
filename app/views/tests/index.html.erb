@@ -16,7 +16,7 @@
 <br/>
 <script>
     $("#user_information").click(function (e) {
-        var informaion = get_user_information("<%= current_user.name %>")
+        var informaion = get_user_information("user1")
 
         alert("" + informaion.name + "," + informaion.email
             + "," + informaion.sex + "," + informaion.phonenumber

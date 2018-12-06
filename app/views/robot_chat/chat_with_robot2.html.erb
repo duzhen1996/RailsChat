@@ -12,178 +12,249 @@
   </div>
 </div>
 
-<div class="col-sm-7">
+<div class="col-sm-9">
   <div class="panel panel-default">
-      <div class="panel-heading">
-        <i class="fa fa-comments fa-fw"></i> Chat
-        <div class="btn-group pull-right">
-          <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-chevron-down"></i>
-          </button>
-          <ul class="dropdown-menu slidedown">
+    <div class="panel-heading">
+      <i class="fa fa-comments fa-fw"></i> Chat
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-chevron-down"></i>
+        </button>
+        <ul class="dropdown-menu slidedown">
+          <li>
+            <a rel="nofollow" data-method="delete" href="/chats/2/delete_user?user_id=2">
+              <i class="fa fa-times"></i> 退出聊天室
+            </a>
+          </li>
+          <li>
+            <a href="#" id="writeScore_panel">
+              <i class="fa fa-edit"></i>填写本次服务评分
+            </a>
+          </li>
+          <li>
+            <a href="#" id="getEva_panel">
+              <i class="fa fa-bookmark"></i>获取本次服务评分
+            </a>
+          </li>
 
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- 评分获取-->
+  <div class="container-fluid">
+
+    <!-- 注册模板控制部分 -->
+    <div class="modal fade" id="getEVA_panel_modal2" role="dialog" style="display: none;">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header" style="padding:35px 50px;">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4><span class="glyphicon glyphicon-lock"></span> 本次服务详细数据如下</h4>
+          </div>
+          <div class="modal-body" style="padding:40px 50px;">
+            <form role="form" action="" accept-charset="UTF-8" method="post">
+              <input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="ZEJ7sLLH/Jjgi9GCYwvtgHVe7ptI9s+GOWq2j8S++YLmlFBgWcofTx+g3U7WX1+B1m04IgBzUTTtxDSfVTZtCA==">
+              <div id="getcontent" align="center">
+                <div id="greeting" class="message">感谢本次使用!</div>
+                <table id="gradetable">
+
+                  <tr>
+                    <td>用户本次得分:</td>
+                    <td id="userSign">
+                      <div id="Uave">1</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>用户平均评分:</td>
+                    <td id="tiles">
+                      <div id="Uscore">1</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>小禅响应时长:</td>
+                    <td id="subTotal">
+                      <div id="Ucorrespond">1</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>用户名:</td>
+                    <td id="usrname"><%= current_user.name %></td>
+                  </tr>
+                  <tr>
+                    <td>本次服务总分:</td>
+                    <td id="gradeTotal">
+                      <div id="Utotal"></div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <script>
+                  $("#getEva_panel").click(function (e) {
+                      var result_map = get_chat_quality(<%= current_user.id %>);
+                      var elave = document.getElementById('Uave');
+                      elave.textContent = result_map.user_score;
+                      var elscore = document.getElementById('Uscore');
+                      elscore.textContent = result_map.average_score;
+                      var elcorrespond = document.getElementById('Ucorrespond');
+                      elcorrespond.textContent = result_map.correspond_time;
+                      var totalscore = result_map.user_score * 0.9 + result_map.correspond_time % 10;
+                      var elname = document.getElementById('Utotal');
+                      elname.textContent = totalscore;
+                  });
+
+              </script>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="writeScore_panel_modal2" class="modal fade" role="dialog" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" id="close_score_model" data-dismiss="modal">x</button>
+          <h4>填写本次小禅服务的分数</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form id="newItemForm">
+            <div align="center" class="form-group">
+              <div class="input-group">
+                <input class="form-control" type="text" id="itemDescription" placeholder="评分(1-10)"/>
+              </div>
+            </div>
+            <div align="center" class="form-group">
+              <div class="input-group">
+                <input class="btn btn-primary btn-large" type="submit" id="addButton" value="提交我的分数"/>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+      var date1 = new Date();  //开始时间
+      var $newItemForm = $('#newItemForm');
+      var $textInput = $('#itemDescription');
+      $newItemForm.on('submit', function (e) {
+          if ($textInput.val() == '') {
+              return;
+          }
+          e.preventDefault();
+          var newText = $textInput.val();//获取用户填写的评分
+          var date2 = new Date();    //结束时间
+          var date3 = date2.getTime() - date1.getTime()  //时间差的毫秒数
+          parseInt(Math.random() * (100 - 70 + 1) + 70, 100);
+          send_chat_quality(<%= current_user.id %>, newText, 1, date3);
+          $textInput.val('');
+          $("#close_score_model").click();
+      });
+
+      $(document).ready(function () {
+          $("#writeScore_panel").click(function (e) {
+              e.preventDefault();
+              //这里是启动上面的模态框
+              $("#writeScore_panel_modal2").modal();
+          });
+      });
+  </script>
+
+  <script>
+      // 这个地方是模态框的启动函数
+      $(document).ready(function () {
+          $("#getEva_panel").click(function (e) {
+              e.preventDefault();
+              //这里是启动上面的模态框
+              $("#getEVA_panel_modal2").modal();
+          });
+      });
+  </script>
+  <script type="text/javascript">
+      toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": true,
+          "positionClass": "toast-bottom-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+      };
+
+  </script>
+
+  <div class="panel-body">
+    <!--Widget body-->
+    <div id="demo-chat-body" class="collapse in">
+      <div class="nano has-scrollbar" style="height:375px">
+        <div class="nano-content pad-all" tabindex="0" style="right: -17px;">
+          <ul class="list-unstyled media-block">
+            <li class="mar-btm">
+              <div class="media-left">
+                <img class="img-sm" src="/assets/user-icon-59b0a754a338d30a655e86d27205a3c685c0c9b10d77e3a997dcf2bca92c9b1b.png" alt="User icon 59b0a754a338d30a655e86d27205a3c685c0c9b10d77e3a997dcf2bca92c9b1b">
+              </div>
+              <div class="media-body pad-hor ">
+                <div class="speech">
+                  <p class="media-heading">robot
+                    <text class="speech-time">
+                      <i class="fa fa-clock-o fa-fw">
+                        <div id="chat_time">2018</div>
+                      </i>
+                      <script>
+                          var today = new Date();
+                          var elMsg = document.getElementById('chat_time');
+                          elMsg.textContent = today.toLocaleString();</script>
+                    </text>
+                  </p>
+                  <p style="margin-bottom: 5px; margin-top: 5px;">
+                  <div id="message_left" type="textleft">我是小禅，你好！</div>
+                  </p>
+                </div>
+              </div>
+            </li>
             <li>
-              <a rel="nofollow" data-method="delete" href="/chats/2/delete_user?user_id=2">
-                <i class="fa fa-times"></i> 退出聊天室
-              </a></li>
-            <li><i class="fa fa-times">
-              <a href="#" id="getEva_panel"> 获取本次服务评分</a>
-	    </i></li>
+              <div id="chat_div">
+                <div id="test_div">
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
     </div>
-<!-- 评分获取-->
-<div class="container-fluid">
-  
-<!-- 注册模板控制部分 -->
-<div class="modal fade" id="getEVA_panel_modal2" role="dialog" style="display: none;">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header" style="padding:35px 50px;">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4><span class="glyphicon glyphicon-lock"></span> 本次服务详细数据如下</h4>
-      </div>
-      <div class="modal-body" style="padding:40px 50px;">
-		<form role="form" action="/sessions/signup" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="ZEJ7sLLH/Jjgi9GCYwvtgHVe7ptI9s+GOWq2j8S++YLmlFBgWcofTx+g3U7WX1+B1m04IgBzUTTtxDSfVTZtCA==">
-	<div id="getcontent" align="center">
-    <div id="greeting" class="message">感谢本次使用!</div>
-    <table id="gradetable">
-
-      <tr>
-        <td>用户本次得分:</td>
-        <td id="userSign"><div id="Uave">1</div></td>
-      </tr>
-      <tr>
-        <td>用户平均评分: </td>
-        <td id="tiles"><div id="Uscore">1</div></td>
-      </tr>
-      <tr>
-        <td>小禅响应时长: </td>
-        <td id="subTotal"><div id="Ucorrespond">1</div></td>
-      </tr>
-      <tr>
-        <td>用户名: </td>
-        <td id="usrname"><%= current_user.name %></td>
-      </tr>
-      <tr>
-        <td>本次服务总分: </td>
-        <td id="gradeTotal"><div id="Utotal"></div></td></tr>
-    </table>
   </div>
-<script>
-	$("#getEva_panel").click(function (e) {
-	var result_map = get_chat_quality(<%= current_user.id %>);
-	var elave = document.getElementById('Uave');
-	elave.textContent = result_map.user_score;
-	var elscore = document.getElementById('Uscore');
-	elscore.textContent = result_map.average_score;
-	var elcorrespond = document.getElementById('Ucorrespond');
-	elcorrespond.textContent = result_map.correspond_time;
-	var totalscore = result_map.user_score*0.9 + result_map.correspond_time%10;
-	var elname = document.getElementById('Utotal');
-	elname.textContent = totalscore;
-	});
-	
-</script>
-	</form>
-      </div>
 
-    </div>
+  <div class="panel-footer">
+    <form class="new_message" id="new_message" action="" accept-charset="UTF-8" data-remote="true" method="post">
+      <input name="utf8" type="hidden" value="✓">
+      <div class="input-group">
+        <input class="form-control input-sm" placeholder="Type your message here..." type="text" name="message[body]" id="message_body" autocomplete="off">
+        <span class="input-group-btn"> <input id="testright" value="发送" class="btn btn-warning btn-sm" readonly="readonly"> </span>
+        <input type="hidden" name="chat_room" id="chat_room" value="2">
+      </div>
+    </form>
   </div>
 </div>
-</div>
 
-<script>
-  // 这个地方是模态框的启动函数
-  $(document).ready(function () {
-    $("#getEva_panel").click(function (e) {
-      e.preventDefault();
-      //这里是启动上面的模态框
-      $("#getEVA_panel_modal2").modal();
-    });
-  });
-</script>
-<script type="text/javascript">
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "positionClass": "toast-bottom-right",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    };
-
-</script>
-
-    <div class="panel-body">
-      <!--Widget body-->
-      <div id="demo-chat-body" class="collapse in">
-        <div class="nano has-scrollbar" style="height:375px">
-          <div class="nano-content pad-all" tabindex="0" style="right: -17px;">
-            <ul class="list-unstyled media-block">
-              <li class="mar-btm">
-                <div class="media-left">
-                  <img class="img-sm" src="/assets/user-icon-59b0a754a338d30a655e86d27205a3c685c0c9b10d77e3a997dcf2bca92c9b1b.png" alt="User icon 59b0a754a338d30a655e86d27205a3c685c0c9b10d77e3a997dcf2bca92c9b1b">
-                </div>
-                <div class="media-body pad-hor ">
-                  <div class="speech">
-                    <p class="media-heading">robot
-                      <text class="speech-time">
-                        <i class="fa fa-clock-o fa-fw">
-                          <div id="chat_time">2018</div>
-                        </i>
-                        <script>
-                            var today = new Date();
-                            var elMsg = document.getElementById('chat_time');
-                            elMsg.textContent = today.toLocaleString();</script>
-                      </text>
-                    </p>
-                    <p style="margin-bottom: 5px; margin-top: 5px;">
-                    <div id="message_left" type="textleft">我是小禅，你好！</div>
-                    </p>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div id="chat_div">
-                  <div id="test_div">
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel-footer">
-      <form class="new_message" id="new_message" action="" accept-charset="UTF-8" data-remote="true" method="post">
-        <input name="utf8" type="hidden" value="✓">
-        <div class="input-group">
-          <input class="form-control input-sm" placeholder="Type your message here..." type="text" name="message[body]" id="message_body" autocomplete="off">
-          <span class="input-group-btn"> <input id="testright" value="发送" class="btn btn-warning btn-sm" readonly="readonly"> </span>
-          <input type="hidden" name="chat_room" id="chat_room" value="2">
-        </div>
-      </form>
-    
-</div>
-  </div>
-</div>
-</div>
 <script>
     function send_message_to_robot() {
-        var text = $('input:text').val();           // Get value of text input
+        var text = $('#message_body').val();           // Get value of text input
+        if (text == '') {
+            return;
+        }
         var today = new Date();
         var elMsg = today.toLocaleString();
 
@@ -214,7 +285,7 @@
         $cont[0].scrollTop = $cont[0].scrollHeight;
 
 
-        var text = $('input:text').val();           // Get value of text input
+        var text = $('#message_body').val();           // Get value of text input
         var robot_return = chat_with_robot(text);
         var today = new Date();
         var elMsg = today.toLocaleString();
@@ -256,10 +327,16 @@
     //
     // });
     //回车发送消息
-    $('input:text').keypress(function (e) {
+    $('#message_body').keypress(function (e) {
         if (e.which == 13) {
             // alert("回车了！");
             send_message_to_robot();
+        }
+    });
+
+    $('#itemDescription').keypress(function (e) {
+        if (e.which == 13) {
+            $('#newItemForm').submit();
         }
     });
 </script>
