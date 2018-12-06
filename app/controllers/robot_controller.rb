@@ -46,6 +46,7 @@ class RobotController < ApplicationController
     puts user_score, chat_time, correspond_time
     sum = 0
     Robot.new(:user_id => user_id, :user_score => user_score, :chat_time => chat_time, :correspond_time => correspond_time).save
+    user_score = 0;
     list = Robot.where(user_id: user_id)
     for i in 0..list.size - 1
       user_score = list[i].user_score + user_score
@@ -77,15 +78,16 @@ class RobotController < ApplicationController
     user_id = params[:user_id]
 
     #==============下面读数据库来获取三个字段，并且填充到上面的几个变量中===============
-    @robot = Robot.find_by_user_id(user_id)
-    user_score = @robot.average_score
-    chat_time = @robot.chat_time
-    correspond_time = @robot.correspond_time
+    robot = Robot.where(user_id).last
+    user_score = robot.user_score
+    average_score = robot.average_score
+    chat_time = robot.chat_time
+    correspond_time = robot.correspond_time
 
 
     #=============上面读数据库来获取三个字段，并且填充到上面的几个变量中===============
 
-    render json: {user_score: user_score, chat_time: chat_time, correspond_time: correspond_time}
+    render json: {user_score: user_score,average_score: average_score,chat_time: chat_time, correspond_time: correspond_time}
   end
 
 end

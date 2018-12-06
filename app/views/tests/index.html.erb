@@ -16,7 +16,8 @@
 <br/>
 <script>
     $("#user_information").click(function (e) {
-        var informaion = get_user_information("user2")
+        var informaion = get_user_information("<%= current_user.name %>")
+
         alert("" + informaion.name + "," + informaion.email
             + "," + informaion.sex + "," + informaion.phonenumber
             + "," + informaion.createtime);
@@ -41,7 +42,8 @@
 <br/>
 <script>
     $("#get_evaluation").click(function (e) {
-        var result_map = get_chat_quality(1);
+        var result_map = get_chat_quality(10);
+alert(result_map)
         alert(result_map.user_score);
         alert(result_map.chat_time);
         alert(result_map.correspond_time);
@@ -70,27 +72,6 @@
 
 <script>
     $("#testleft").click(function () {
-        // document.getElementById("test_div").innerHTML = document.getElementById("test_div").innerHTML +
-        //     "<li class=\"mar-btm\">\n" +
-        //     "  <div class=\"media-left\">\n" +
-        //     "    <img class=\"img-sm\" src=\"/assets/user-icon-59b0a754a338d30a655e86d27205a3c685c0c9b10d77e3a997dcf2bca92c9b1b.png\" alt=\"User icon 59b0a754a338d30a655e86d27205a3c685c0c9b10d77e3a997dcf2bca92c9b1b\">\n" +
-        //     "  </div>\n" +
-        //     "  <div class=\"media-body pad-hor \">\n" +
-        //     "    <div class=\"speech\">\n" +
-        //     "      <p class=\"media-heading\">robot\n" +
-        //     "        <text class=\"speech-time\">\n" +
-        //     "          <i class=\"fa fa-clock-o fa-fw\"></i>\n" +
-        //     "          2018-11-13 14:48:22\n" +
-        //     "        </text>\n" +
-        //     "      </p>\n" +
-        //     "      <p style=\"margin-bottom: 5px; margin-top: 5px;\">测试</p>\n" +
-        //     "    </div>\n" +
-        //     "  </div>\n" +
-        //     "</li>\n" +
-        //     "<script>\n" +
-        //     "    var $cont = $('.nano-content');\n" +
-        //     "    $cont[0].scrollTop = $cont[0].scrollHeight;\n" +
-        //     "<\/script>";
         $("#test_div").html("<li class=\"mar-btm\">\n" +
             "  <div class=\"media-left\">\n" +
             "    <img class=\"img-sm\" src=\"/assets/user-icon-59b0a754a338d30a655e86d27205a3c685c0c9b10d77e3a997dcf2bca92c9b1b.png\" alt=\"User icon 59b0a754a338d30a655e86d27205a3c685c0c9b10d77e3a997dcf2bca92c9b1b\">\n" +

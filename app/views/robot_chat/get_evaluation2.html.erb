@@ -1,40 +1,51 @@
-<div class="container-fluid">
-  <header class="jumbotron hero-spacer">
-    <h1 align="center">小禅本次服务详细数据如下</h1>
-    <div id="getcontent" align="center">
-      <div id="greeting" class="message">感谢本次使用!</div>
-      <table id="gradetable">
-        <tr>
-          <td>小禅服务人数:</td>
-          <td id="userSign"></td>
-        </tr>
-        <tr>
-          <td>小禅响应时长:</td>
-          <td id="tiles"></td>
-        </tr>
-        <tr>
-          <td>小禅响应时长:</td>
-          <td id="subTotal"></td>
-        </tr>
-        <tr>
-          <td>用户名:</td>
-          <td id="usrname">
-            <div id="Uname">1</div>
-          </td>
-        </tr>
-        <tr>
-          <td>本次服务总分:</td>
-          <td id="gradeTotal"></td>
-        </tr>
-      </table>
-      <%= link_to '返回小禅的神级服务', {:controller => 'robot_chat', :action => 'chat_with_robot2'} %>
+<li><i class="fa fa-times">
+              <a href="#" id="writeScore_panel"> 填写本次服务评分</a>
+</i></li>
+
+<div id="writeScore_panel_modal2" class="modal fade" role="dialog" style="display: none;">
+<div class="modal-dialog">
+<div class="modal-content">
+      <div class="modal-header" style="padding:35px 50px;">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4>填写本次小禅服务的分数</h4>
+      </div>
+      <div class="modal-body" style="padding:40px 50px;">
+<form id="newItemForm">
+<div align="center" class="form-group">
+              <div class="input-group">
+<input class="form-control" type="text" id="itemDescription" placeholder="小禅刚才的服务可以得多少分呢..." />
+        <input class="btn btn-primary btn-large" type="submit" id="addButton" value="提交我的分数" />
+              </div>
     </div>
-
-    <script>
-
-    </script>
-
-  </header>
-  <hr>
-  <hr>
+      </form>
+<script>
+var date1=new Date();  //开始时间
+  $(function() {
+  var $newItemForm = $('#newItemForm');
+  var $textInput = $('input:text');
+  var $textInput = $('input:text');
+  $newItemForm.on('submit', function(e){
+    e.preventDefault();
+    var newText = $textInput.val();//获取用户填写的评分
+    var date2=new Date();    //结束时间
+    var date3=date2.getTime()-date1.getTime()  //时间差的毫秒数
+    parseInt(Math.random()*(100-70+1)+70,100);
+    var return_code = send_chat_quality(<%= current_user.id %>, newText, 1, date3);
+    $textInput.val('');
+  });
+});
+</script>
+      </div>
 </div>
+</div>
+</div>
+<script>
+  // 这个地方是模态框的启动函数
+  $(document).ready(function () {
+    $("#writeScore_panel").click(function (e) {
+      e.preventDefault();
+      //这里是启动上面的模态框
+      $("#writeScore_panel_modal2").modal();
+    });
+  });
+</script>
