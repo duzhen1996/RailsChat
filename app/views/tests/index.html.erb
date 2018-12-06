@@ -16,7 +16,8 @@
 <br/>
 <script>
     $("#user_information").click(function (e) {
-        var informaion = get_user_information("user2")
+        var informaion = get_user_information("<%= current_user.name %>")
+
         alert("" + informaion.name + "," + informaion.email
             + "," + informaion.sex + "," + informaion.phonenumber
             + "," + informaion.createtime);
@@ -41,7 +42,8 @@
 <br/>
 <script>
     $("#get_evaluation").click(function (e) {
-        var result_map = get_chat_quality(1);
+        var result_map = get_chat_quality(10);
+alert(result_map)
         alert(result_map.user_score);
         alert(result_map.chat_time);
         alert(result_map.correspond_time);

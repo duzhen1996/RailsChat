@@ -10,7 +10,7 @@
 		<table id="gradetable">
       <tr>
         <td>用户名:<div id="show_infor1"><%= current_user.name %></div>
-                <input class="form-control" placeholder="输入要修改的用户名" type="password" name="session[password]"       id="edit_infor1">
+                <input class="form-control" placeholder="输入要修改的用户名" type="username" name="session[password]"       id="edit_infor1">
 	</td>
       </tr>
 	<tr>
@@ -20,18 +20,18 @@
       </tr>
 	<tr>
         <td>邮箱:<div id="show_infor3">test1@tests.com</div>
-                <input class="form-control" placeholder="输入要修改的用户名" type="password" name="session[password]"       id="edit_infor3">
+                <input class="form-control" placeholder="输入要修改的用户名" type="eamil" name="session[password]"       id="edit_infor3">
 	</td>
       </tr>
 	<tr>
         <td>注册时间:<div id="show_infor4">test1@tests.com</div>
-                <input class="form-control" placeholder="输入要修改的用户名" type="password" name="session[password]"       id="edit_infor4">
+                <input class="form-control" placeholder="输入要修改的用户名" type="register" name="session[password]"       id="edit_infor4">
 	</td>
       </tr>
 		</table>
 <script>
     
-        var informaion = get_user_information(<%= current_user.name %>)
+        var informaion = get_user_information("<%= current_user.name %>")
 	var elshow_infor2 = document.getElementById('Usex');
 	elshow_infor2.textContent = informaion.sex;
     	var elshow_infor3 = document.getElementById('show_infor3');
