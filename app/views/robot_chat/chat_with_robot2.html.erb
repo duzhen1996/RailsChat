@@ -85,7 +85,7 @@
         <input name="utf8" type="hidden" value="✓">
         <div class="input-group">
           <input class="form-control input-sm" placeholder="Type your message here..." type="text" name="message[body]" id="message_body" autocomplete="off">
-          <span class="input-group-btn"> <input id="testright" value="发送" class="btn btn-warning btn-sm"> </span>
+          <span class="input-group-btn"> <input id="testright" value="发送" class="btn btn-warning btn-sm" readonly="readonly"> </span>
           <input type="hidden" name="chat_room" id="chat_room" value="2">
         </div>
       </form>
@@ -157,7 +157,7 @@
         $cont[0].scrollTop = $cont[0].scrollHeight;
 
         //清空输出框
-        $('input:text').val("");
+        $('#message_body').val("");
     }
 
     //右边回话
