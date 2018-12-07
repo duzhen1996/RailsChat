@@ -1,94 +1,110 @@
 <div class="modal-content">
-      <div class="modal-header" style="padding:35px 50px;">
-        <button type="button" class="close" data-dismiss="modal"></button>
-        <h4>个人资料</h4>
-      </div>
-      <div class="modal-body" style="padding:40px 50px;">
-		<form role="form" action="/sessions/signup" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="ZEJ7sLLH/Jjgi9GCYwvtgHVe7ptI9s+GOWq2j8S++YLmlFBgWcofTx+g3U7WX1+B1m04IgBzUTTtxDSfVTZtCA==">
-    <div align="center" class="form-group">
-              <div class="input-group">
-		<table id="gradetable">
-      <tr>
-        <td>用户名:<div id="show_infor1"><%= current_user.name %></div>
-                <input class="form-control" placeholder="输入要修改的用户名" type="username" name="session[password]"       id="edit_infor1">
-	</td>
-      </tr>
-	<tr>
-        <td>性别:<div id="show_infor2"><div id="Usex">test1@tests.com</div></div>
-                <input class="form-control" placeholder="输入要修改的用户名" type="password" name="session[password]"       id="edit_infor2">
-	</td>
-      </tr>
-	<tr>
-        <td>邮箱:<div id="show_infor3">test1@tests.com</div>
-                <input class="form-control" placeholder="输入要修改的用户名" type="eamil" name="session[password]"       id="edit_infor3">
-	</td>
-      </tr>
-	<tr>
-        <td>注册时间:<div id="show_infor4">test1@tests.com</div>
-                <input class="form-control" placeholder="输入要修改的用户名" type="register" name="session[password]"       id="edit_infor4">
-	</td>
-      </tr>
-		</table>
-<script>
-    
-        var informaion = get_user_information("<%= current_user.name %>")
-	var elshow_infor2 = document.getElementById('Usex');
-	elshow_infor2.textContent = informaion.sex;
-    	var elshow_infor3 = document.getElementById('show_infor3');
-	elshow_infor3.textContent = informaion.email;
-	var elshow_infor4 = document.getElementById('show_infor4');
-	elshow_infor4.textContent = informaion.createtime;
-</script>
-              </div>
-    </div>
-	<a class="btn btn-primary btn-large" id="edit_form"> 编辑</a>
-	<a herf="#" class="btn btn-primary btn-large" id="submit_form"> 提交</a>
-	<%= link_to chats_path, class: "dropbtn" do %>
-                返回聊天室  <i class="fa fa-wechat"></i>
-            <% end %>
-	
-<script>
-  var $show_infor1 = $('#show_infor1');
-  var $show_infor2 = $('#show_infor2');
-  var $show_infor3 = $('#show_infor3');
-  var $show_infor4 = $('#show_infor4');
-  var $edit_infor1 = $('#edit_infor1');
-  var $edit_infor2 = $('#edit_infor2');
-  var $edit_infor3 = $('#edit_infor3');
-  var $edit_infor4 = $('#edit_infor4');
-  var $submit_form = $('#submit_form');
-	$show_infor1.show();
-	$show_infor2.show();
-	$show_infor3.show();
-	$show_infor4.show();
-	$edit_infor1.hide();
-	$edit_infor2.hide();
-	$edit_infor3.hide();
-	$edit_infor4.hide();
-	$submit_form.hide();
-    $('#edit_form').on('click', function(){
-    $show_infor1.hide();
-    $show_infor2.hide();
-    $show_infor3.hide();
-    $show_infor4.hide();
-    $edit_infor1.show();
-    $edit_infor2.show();
-    $edit_infor3.show();
-    $edit_infor4.show();
-    $submit_form.show();
-  });
-$('#submit_form').on('click', function(){
-        $show_infor1.show();
-	$show_infor2.show();
-	$show_infor3.show();
-	$show_infor4.show();
-	$edit_infor1.hide();
-	$edit_infor2.hide();
-	$edit_infor3.hide();
-	$edit_infor4.hide();
-	$submit_form.hide();
-  });
-</script>
-		</form>
-      </div>
+  <div class="modal-header" style="padding:35px 50px;">
+    <button type="button" class="close" data-dismiss="modal"></button>
+    <h4>个人资料</h4>
+  </div>
+  <div class="modal-body" style="padding:40px 50px;">
+    <form role="form" action="/sessions/signup" accept-charset="UTF-8" method="post">
+      <input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="ZEJ7sLLH/Jjgi9GCYwvtgHVe7ptI9s+GOWq2j8S++YLmlFBgWcofTx+g3U7WX1+B1m04IgBzUTTtxDSfVTZtCA==">
+      <div align="center" class="form-group">
+        <div class="input-group">
+          <table id="gradetable">
+            <tr>
+              <td>用户名:
+                <div id="show_infor1"><%= current_user.name %></div>
+                <input class="form-control" placeholder="输入要修改的用户名" value="<%= current_user.name %>" type="username" name="session[password]" id="edit_infor1" autocomplete="off">
+              </td>
+            </tr>
+            <tr>
+              <td>性别:
+                <div id="show_infor2">
+                  <div id="Usex"></div>
+                </div>
+                <input class="form-control" placeholder="输入要修改的性别" type="username" name="session[password]" id="edit_infor2" autocomplete="off">
+              </td>
+            </tr>
+            <tr>
+              <td>邮箱:
+                <div id="show_infor3"></div>
+                <input class="form-control" placeholder="输入要修改的邮箱" type="email" name="session[password]" id="edit_infor3" autocomplete="off">
+              </td>
+            </tr>
 
+          </table>
+          <script>
+
+              var informaion = get_user_information("<%= current_user.name %>")
+              var elshow_infor2 = document.getElementById('Usex');
+              $("#edit_infor2").val(informaion.sex);
+              elshow_infor2.textContent = informaion.sex;
+              var elshow_infor3 = document.getElementById('show_infor3');
+              $("#edit_infor3").val(informaion.email);
+              elshow_infor3.textContent = informaion.email;
+
+          </script>
+        </div>
+      </div>
+      <a class="btn btn-primary btn-large" id="edit_form"> 编辑</a>
+      <a herf="#" class="btn btn-primary btn-large" id="submit_form"> 提交</a>
+      <%= link_to chats_path, class: "dropbtn" do %>
+        返回聊天室 <i class="fa fa-wechat"></i>
+      <% end %>
+
+      <script>
+          var $show_infor1 = $('#show_infor1');
+          var $show_infor2 = $('#show_infor2');
+          var $show_infor3 = $('#show_infor3');
+          var $show_infor4 = $('#show_infor4');
+          var $edit_infor1 = $('#edit_infor1');
+          var $edit_infor2 = $('#edit_infor2');
+          var $edit_infor3 = $('#edit_infor3');
+
+          var $submit_form = $('#submit_form');
+          $show_infor1.show();
+          $show_infor2.show();
+          $show_infor3.show();
+          $show_infor4.show();
+          $edit_infor1.hide();
+          $edit_infor2.hide();
+          $edit_infor3.hide();
+
+          $submit_form.hide();
+          $('#edit_form').on('click', function () {
+              $show_infor1.hide();
+              $show_infor2.hide();
+              $show_infor3.hide();
+              $show_infor4.hide();
+              $edit_infor1.show();
+              $edit_infor2.show();
+              $edit_infor3.show();
+
+              $submit_form.show();
+          });
+          $('#submit_form').on('click', function () {
+              // $show_infor1.show();
+              // $show_infor2.show();
+              // $show_infor3.show();
+              // $show_infor4.show();
+              // $edit_infor1.hide();
+              // $edit_infor2.hide();
+              // $edit_infor3.hide();
+              // $submit_form.hide();
+
+              //提交之后刷新页面吧
+              var return_code = modify_user_information(<%= current_user.id %>, $edit_infor1.val(), $edit_infor3.val(), $edit_infor2.val());
+
+              // alert(return_code);
+
+              if (return_code == 1) {
+                  //刷新当前页面
+                  location.reload();
+              } else if (return_code == 0) {
+                  //弹窗
+                  alert("用户名或邮箱已被使用");
+                  location.reload();
+              }
+          });
+      </script>
+    </form>
+  </div>
+</div>

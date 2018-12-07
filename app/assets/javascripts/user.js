@@ -53,3 +53,28 @@ function get_user_information(user_name) {
 
     return information;
 }
+
+//这里修改用户用户名、邮箱、性别
+//可以修改其中的一个或者多个，对于不修改的，就传和原来一样的值就好了
+function modify_user_information(user_id, user_name, user_email, user_sex) {
+    var url = '/extend_users/modify_user_information';
+
+    var return_code = 1;
+
+    $.ajax({
+        url: url,
+        method: 'POST',
+        async: false,
+        data: {
+            user_id: user_id,
+            user_name: user_name,
+            user_email: user_email,
+            user_sex: user_sex,
+        },
+        success: function (response) {
+            return_code = response.return_code;
+        }
+    });
+
+    return return_code;
+}

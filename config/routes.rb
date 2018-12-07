@@ -115,4 +115,6 @@ Rails.application.routes.draw do
   post 'extend_users/add_new_user'
   # 获取一个用户的信息
   get 'extend_users/get_user_information'
+  # 修改用户信息
+  post 'extend_users/modify_user_information'
 end

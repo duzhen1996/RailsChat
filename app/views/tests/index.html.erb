@@ -37,6 +37,18 @@
 </script>
 
 <br/>
+<button id="modify_user">修改用户信息</button>
+<p>修改user_id=1的用户信息，改成user1，user1@test.com，female</p>
+<br/>
+<script>
+    $("#modify_user").click(function (e) {
+        var return_code = modify_user_information(1, 'user1', 'user1@test.com','female');
+
+        alert(return_code);
+    });
+</script>
+
+<br/>
 <button id="get_evaluation">获取评价信息</button>
 <p>获取评价信息map</p>
 <br/>
