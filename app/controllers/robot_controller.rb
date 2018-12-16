@@ -8,32 +8,32 @@ class RobotController < ApplicationController
   def chat_with_robot
     input_str = params[:input_string]
 
-    # 这里提交post请求
-    url = URI('http://openapi.tuling123.com/openapi/api/v2')
+    # # 这里提交post请求
+    # url = URI('http://openapi.tuling123.com/openapi/api/v2')
+    #
+    # # 这里设计请求内容，一开始是写成map，然后调用to_json转化为json字符串
+    # data = {
+    #     "reqType": 0,
+    #     "perception": {
+    #         "inputText": {
+    #             "text": input_str,
+    #         },
+    #     },
+    #     "userInfo": {
+    #         "apiKey": "7992efa1d9d34cb69a201e7ab181f5b9",
+    #         "userId": "345468"
+    #     }
+    # }.to_json
+    #
+    # req = Net::HTTP::Post.new(url, 'Content-Type' => 'application/json')
+    # req.body = data
+    #
+    # res = Net::HTTP.new(url.host, url.port).start {|http| http.request(req)}
+    #
+    # puts JSON.parse(res.body)
+    # result = JSON.parse(res.body)["results"][0]["values"]["text"]
 
-    # 这里设计请求内容，一开始是写成map，然后调用to_json转化为json字符串
-    data = {
-        "reqType": 0,
-        "perception": {
-            "inputText": {
-                "text": input_str,
-            },
-        },
-        "userInfo": {
-            "apiKey": "7992efa1d9d34cb69a201e7ab181f5b9",
-            "userId": "345468"
-        }
-    }.to_json
-
-    req = Net::HTTP::Post.new(url, 'Content-Type' => 'application/json')
-    req.body = data
-
-    res = Net::HTTP.new(url.host, url.port).start {|http| http.request(req)}
-
-    puts JSON.parse(res.body)
-    result = JSON.parse(res.body)["results"][0]["values"]["text"]
-
-    render json: {output_string: result}
+    render json: {output_string: chat_with_robot_without_route(input_str)}
   end
 
   # 这里写一个函数来传入一个评价信息
@@ -88,6 +88,37 @@ class RobotController < ApplicationController
     #=============上面读数据库来获取三个字段，并且填充到上面的几个变量中===============
 
     render json: {user_score: user_score,average_score: average_score,chat_time: chat_time, correspond_time: correspond_time}
+  end
+
+  # 将机器人聊天的主要逻辑分离，要不带上路由测试太麻烦了
+  # 这个函数传入一个参数，就是用户的输入，输出的是机器人的输入。
+  def chat_with_robot_without_route(input_str)
+    # 这里提交post请求
+    url = URI('http://openapi.tuling123.com/openapi/api/v2')
+
+    # 这里设计请求内容，一开始是写成map，然后调用to_json转化为json字符串
+    data = {
+        "reqType": 0,
+        "perception": {
+            "inputText": {
+                "text": input_str,
+            },
+        },
+        "userInfo": {
+            "apiKey": "7992efa1d9d34cb69a201e7ab181f5b9",
+            "userId": "345468"
+        }
+    }.to_json
+
+    req = Net::HTTP::Post.new(url, 'Content-Type' => 'application/json')
+    req.body = data
+
+    res = Net::HTTP.new(url.host, url.port).start {|http| http.request(req)}
+
+    puts JSON.parse(res.body)
+    result = JSON.parse(res.body)["results"][0]["values"]["text"]
+
+    return result
   end
 
 end
