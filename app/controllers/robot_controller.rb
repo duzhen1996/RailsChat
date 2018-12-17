@@ -8,6 +8,10 @@ class RobotController < ApplicationController
   def chat_with_robot
     input_str = params[:input_string]
 
+    puts params
+
+    puts input_str
+
     # # 这里提交post请求
     # url = URI('http://openapi.tuling123.com/openapi/api/v2')
     #
@@ -76,6 +80,8 @@ class RobotController < ApplicationController
 
     # 这里获取用户的id
     user_id = params[:user_id]
+
+    # puts "user_id = " + user_id
 
     #==============下面读数据库来获取三个字段，并且填充到上面的几个变量中===============
     robot = Robot.where(user_id).last
