@@ -32,27 +32,6 @@ class RobotControllerTest < ActionDispatch::IntegrationTest
   # 这里设计一个函数来发送请求，返回一个map，是服务器返回的json
   # 参数一共三个，一个是请求类型，一个是参数（hash），一个是访问的地址
   # 返回回复map
-  def send_ajax_request(method_str, input_params, url_str)
-
-    puts input_params
-
-    if method_str.downcase.eql?("get")
-      # puts "到这里"
-      get url_str, input_params,
-          headers: {"HTTP_REFERER" => "http://0.0.0.0:3000"}
-
-      return_obj = JSON.parse(@response.body)
-    end
-
-    if method_str.downcase.eql?("post")
-      post url_str, input_params,
-           headers: {"HTTP_REFERER" => "http://0.0.0.0:3000"}
-
-      return_obj = JSON.parse(@response.body)
-    end
-
-    return return_obj
-  end
 
   test "chat with robot" do
     input_params = {}
