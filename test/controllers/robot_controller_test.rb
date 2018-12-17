@@ -62,7 +62,7 @@ class RobotControllerTest < ActionDispatch::IntegrationTest
     puts input_params.class
 
     # get '/robot/chat_with_robot', input_params
-        # headers: {"HTTP_REFERER" => "http://0.0.0.0:3000"}
+    # headers: {"HTTP_REFERER" => "http://0.0.0.0:3000"}
 
     # return_obj = JSON.parse(@response.body)
 
@@ -85,7 +85,12 @@ class RobotControllerTest < ActionDispatch::IntegrationTest
 
     puts return_obj
 
-    assert true
+    if return_obj.empty?
+      assert false
+    else
+      assert true
+    end
+
   end
 
   test "store evaluation" do
@@ -106,15 +111,20 @@ class RobotControllerTest < ActionDispatch::IntegrationTest
 
     if return_obj["return_code"] == 1
       # 讲道理这里还需要取一下对应的值，看看有没有问题
-      input_params = {user_id: 1}
+      input_params = {user_id: 2}
 
       # 这里发送请求
       return_obj = send_ajax_request('GET', input_params,
                                      '/robot/get_evaluation')
 
-      puts return_obj
+      puts return_obj.empty?
 
-      assert true
+      if return_obj.empty?
+        assert false
+      else
+        assert true
+      end
+
     else
       assert false
     end
