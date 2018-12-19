@@ -71,11 +71,11 @@ class ExtendUsersController < ApplicationController
     # 主要是用户名和用户邮箱都要有唯一性
     # 将是不是唯一的变量存在下面的变脸中，是唯一的就赋1，反之给0
     unique = 1
-    if (User.where("user_name =  '" + user_name + "'").count || User.where(" user_email = '" + user_email + "'").count)
+    if (User.where("name = '" + user_name + "'").count != 0 || User.where(" email = '" + user_email + "'").count != 0)
       unique = 0
     end
     #如果校验失败就返回0，就执行下面两句代码
-    if (unique == 0)
+    if unique == 0
       render json: {return_code: 0}
       return
     end
