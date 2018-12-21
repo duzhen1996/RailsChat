@@ -27,4 +27,38 @@ class ExtendUsersControllerTest < ActionDispatch::IntegrationTest
       assert false
     end
   end
+
+  # 测试读取一个用户
+  # 每一个测试一开始数据库都会被清空，所有先写一个用户进去
+  test 'get user information' do
+    # 写一个用户进去
+    input_params = {}
+
+    input_params[:user_name] = 'zhendu'
+    input_params[:user_email] = 'zhendu@test.com'
+    input_params[:user_password] = '123456'
+
+    # 发送请求
+    send_ajax_request('POST', input_params, '/extend_users/add_new_user')
+
+    # 给一个用户名
+    input_params = {}
+
+    input_params[:user_name] = 'zhendu'
+
+    # 使用get来获取用户
+    return_obj = send_ajax_request('GET', input_params, '/extend_users/get_user_information')
+
+    if return_obj['name']=='zhendu' && return_obj['email']=='zhendu@test.com'
+      assert true
+    else
+      assert false
+    end
+  end
+
+  # 修改用户数据
+  # test 'modify user information' do
+  #   # 先存一个数据
+  #
+  # end
 end
