@@ -52,7 +52,7 @@ cd RailsChat
 bundle install
 
 # 初始化数据库
-	./init_db.sh
+./init_db.sh
 ```
 
 3. 运行网页服务器
