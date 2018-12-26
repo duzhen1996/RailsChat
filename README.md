@@ -1,21 +1,14 @@
 # RailsChat 
 
-> 软件工程作业
->
-> 初始化数据库可以调用脚本./init_db.sh
-
 RailsChat是一款由Rails开发的实时Web聊天室，在[Render_sync](https://github.com/chrismccord/render_sync)的基础上完成，有需要即时通讯的应用可以考虑这个Example
 
 ## Online Demo
 
-![demo](demo.gif)
-
-请点击[这里](http://139.129.209.63:44400/)访问Demo，测试用户登陆账号格式为：
+请点击[这里](http://140.143.79.172:3000/)访问Demo，测试用户登陆账号格式为：
 
 ```
 username: user<number>@test.com
-password: pass
-word
+password: password
 ```
 
 * 其中number为1到20，代表20个用户，例如使用`user1@test.com`和`password`能登陆用户1，以此类推
@@ -29,14 +22,16 @@ Note：请用两个浏览器分别登陆不同的用户来测试消息的即使�
 * 创建私人聊天，也支持多人聊天
 * 房主可以拉人，踢人
 * 房主能转移房屋权限
+* 机器人聊天
+* 用户资料查看与修改
+* 新建用户
 
 ## Todo
 
 1. 现在的即时推送只限于聊天的消息，其他的推送比如未读信息提醒（包括声音）等还未涉及
 2. 添加好友需要对方同意，现在是单方面添加
-3. 用户个人简介还未开发
-4. UI界面修改（类似WeChat）
-5. 管理后台开发
+3. UI界面修改（类似WeChat）
+4. 管理后台开发
 
 ## Usage 
 
@@ -44,16 +39,29 @@ Note：请用两个浏览器分别登陆不同的用户来测试消息的即使�
 
 1. Fork项目
 
-  ```
+  ```shell
   git clone https://github.com/your_user_name/RailsChat
-  cd RailsChat
-  bundle install
-  rails server
   ```
 
-2. 然后再打开另外一个终端，运行以下命令启动另外一个server来监听聊天室的用户并实时推送最新的消息：
+2. 搭建环境
 
-  ```
+```shell
+	cd RailsChat
+	# 安装依赖
+	bundle install
+	# 初始化数据库
+	./init_db.sh
+```
+
+3. 运行网页服务器
+
+```shell
+	rails server
+```
+
+4. 然后再打开另外一个终端，运行以下命令启动另外一个server来监听聊天室的用户并实时推送最新的消息：
+
+  ```shell
   rackup sync.ru -E production
   ```
 
