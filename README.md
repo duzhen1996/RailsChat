@@ -39,31 +39,33 @@ Note：请用两个浏览器分别登陆不同的用户来测试消息的即使�
 
 1. Fork项目
 
-  ```shell
-  git clone https://github.com/your_user_name/RailsChat
-  ```
+```shell
+git clone https://github.com/your_user_name/RailsChat
+```
 
 2. 搭建环境
 
 ```shell
-	cd RailsChat
-	# 安装依赖
-	bundle install
-	# 初始化数据库
+cd RailsChat
+
+# 安装依赖
+bundle install
+
+# 初始化数据库
 	./init_db.sh
 ```
 
 3. 运行网页服务器
 
 ```shell
-	rails server
+rails server
 ```
 
 4. 然后再打开另外一个终端，运行以下命令启动另外一个server来监听聊天室的用户并实时推送最新的消息：
 
-  ```shell
-  rackup sync.ru -E production
-  ```
+```shell
+rackup sync.ru -E production
+```
 
 ### Note：如果要部署到云上或者本地局域网内，需要修改`config/sync.yml`文件
 
