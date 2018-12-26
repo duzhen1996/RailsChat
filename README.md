@@ -11,7 +11,7 @@ username: user<number>@test.com
 password: password
 ```
 
-* 其中number为1到20，代表20个用户，例如使用`user1@test.com`和`password`能登陆用户1，以此类推
+* 其中number为1到100，代表100个用户，例如使用`user1@test.com`和`password`能登陆用户1，以此类推
 
 Note：请用两个浏览器分别登陆不同的用户来测试消息的即使推送，注意这两个用户需要互为好友
 
