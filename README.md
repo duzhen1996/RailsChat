@@ -35,7 +35,11 @@ Note：请用两个浏览器分别登陆不同的用户来测试消息的即使�
 
 ## Usage 
 
-### [RailsChat详细教程-传送门](http://blog.csdn.net/ppp8300885/article/details/59109778)
+下面是Rails和Ruby的相关博客，用于快速上手这个项目：
+
+[Ruby快速建站入门---Rails基础](http://blog.leanote.com/post/454858191@qq.com/Ruby%E5%BF%AB%E9%80%9F%E5%BB%BA%E7%AB%99%E5%85%A5%E9%97%A8-Rails%E5%9F%BA%E7%A1%80)
+
+[Ruby快速建站入门---Ruby基础](http://blog.leanote.com/post/454858191@qq.com/Ruby%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8)
 
 1. Fork项目
 
